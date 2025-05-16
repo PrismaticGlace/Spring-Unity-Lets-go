@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Banana
   - Pinapple
+  - Sight
+  - Enemy
+  - EnemyProg
   layers:
   - Default
   - TransparentFX

@@ -1,0 +1,94 @@
+using UnityEngine;
+using UnityEngine.ProBuilder;
+using UnityEngine.Windows;
+public class FollowerEnemy : MonoBehaviour{
+
+    public bool canMove = true;
+    public GameObject target;
+    public Transform targetTrans;
+    public float health = 1f;
+    public CharacterController cc;
+    [Space]
+    //Projectile Things
+    [SerializeField] private float distThreshX = 5f;
+    [SerializeField] private float distThreshZ = 5f;
+    [SerializeField] private float projectileFireRate = 2.0f;
+    [SerializeField] private Transform spawnPoint;
+    [SerializeField] private GameObject projectilePf;
+    private float timeLastFired = 0;
+    [Space]
+    //Speeds
+    [SerializeField, Range(0.0f, 15.0f)] private float speed;
+    [SerializeField, Range(0.0f, 20.0f)] private float turnSpeed;
+    [SerializeField, Range(0.0f, 750.0f)] private float turnRotateSpeed;
+    //Vectors
+    private Vector3 targetVector;
+    private Vector3 moveTowards;
+    private Vector3 moveRotation;
+    private Vector3 velocity;
+    
+
+    void Start() {
+        if (projectileFireRate <= 0) {
+            projectileFireRate = 2f;
+        }
+    }
+
+    void Update() {
+        if (health <= 0) {
+            Destroy(gameObject);
+        }
+
+        if (canMove) {
+            targetVector = (target.transform.position - transform.position).normalized;
+
+            Quaternion targetRot = Quaternion.LookRotation(moveRotation, Vector3.up); // Returns target rotation.
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, turnRotateSpeed * Time.deltaTime);
+
+            //Smooth Interpolate Rotation
+            moveRotation = Vector3.SmoothDamp(moveRotation, targetVector, ref moveRotation, 0.1f, Mathf.Infinity);
+
+            //Smooth Interpolate Movement
+            moveTowards = Vector3.SmoothDamp(moveTowards, targetVector, ref moveTowards, 0.05f, 10f);
+
+            //Move
+            velocity.x = moveTowards.x * speed;
+            velocity.z = moveTowards.z * speed;
+            velocity.y = moveTowards.y * speed;
+            CheckDistance(Mathf.Abs(targetTrans.position.x - transform.position.x), Mathf.Abs(targetTrans.position.z - transform.position.z));
+
+            cc.Move(velocity);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("Sight")) {
+            canMove = false;
+        }
+    }
+    private void OnTriggerExit(Collider other) {
+        canMove = true;
+    }
+
+    public void Fire() {
+        GameObject project = Instantiate(projectilePf, spawnPoint.position, Quaternion.identity) as GameObject;
+        Rigidbody prb = project.GetComponent<Rigidbody>();
+        Vector3 fireTo = (target.transform.position - spawnPoint.transform.position).normalized;
+        prb.AddForce(fireTo * 3f, ForceMode.Impulse);
+        Debug.Log("Did it add the velocity");
+    }
+
+    void CheckDistance(float disX, float disZ) {
+        if (disX <= distThreshX && disZ <= distThreshZ) {
+            CheckFire();
+        }
+    }
+
+    void CheckFire() {
+        Debug.Log("Trying to Fire");
+        if (Time.time >= timeLastFired + projectileFireRate) {
+            Fire();
+            timeLastFired = Time.time;
+        }
+    }
+}

@@ -19,10 +19,22 @@ public class Pickup : MonoBehaviour
                 case PickupType.Banana:
                     //
                     Debug.Log("Banana Touched");
+                    try {
+                        Destroy(gameObject);
+                    }
+                    catch (Exception e) { 
+                        Debug.LogException(e);
+                    }
                     break;
                 case PickupType.Pinapple:
                     //
                     Debug.Log("Pinapple pen");
+                    try {
+                        Destroy(gameObject);
+                    }
+                    catch (Exception e) { 
+                        Debug.LogException(e);
+                    }
                     break;
                 case PickupType.Mango:
                     //
