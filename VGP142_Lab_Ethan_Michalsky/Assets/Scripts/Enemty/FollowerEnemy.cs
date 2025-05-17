@@ -56,8 +56,8 @@ public class FollowerEnemy : MonoBehaviour{
             velocity.z = moveTowards.z * speed;
             velocity.y = moveTowards.y * speed;
             CheckDistance(Mathf.Abs(targetTrans.position.x - transform.position.x), Mathf.Abs(targetTrans.position.z - transform.position.z));
-
-            cc.Move(velocity);
+            //Move
+            cc.Move(velocity * Time.deltaTime);
         }
     }
 

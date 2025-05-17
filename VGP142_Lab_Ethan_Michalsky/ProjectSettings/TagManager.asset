@@ -9,6 +9,9 @@ TagManager:
   - Sight
   - Enemy
   - EnemyProg
+  - Detection
+  - Ice
+  - Wall
   layers:
   - Default
   - TransparentFX

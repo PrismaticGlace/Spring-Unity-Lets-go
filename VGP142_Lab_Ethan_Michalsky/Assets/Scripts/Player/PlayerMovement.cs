@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField, Range(0.0f, 1.0f)] private float inDampRotate;
     [SerializeField, Range(0.0f, 1.0f)] private float inDampMoveBasic;
     [SerializeField, Range(0.0f, 1.0f)] private float inDampAccel;
-    [SerializeField, Range(0.0f, 1.0f)] private float inDampDeccel;
+    [Range(0.0f, 1.0f)] public float inDampDeccel;
     [SerializeField, Range(0.0f, 1.0f)] private float inDampTurn;
     [SerializeField, Range(0.0f, 1.0f)] private float airDampMove;
     [SerializeField, Range(0.0f, 1.0f)] private float airDampRotate;
@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour {
 
     //Vectors
     private Vector3 gravityVect;
-    private Vector3 velocity;
+    public Vector3 velocity;
     private Vector3 inVectorRotate;
     private Vector3 inVelocityRotate;
     private Vector3 inVectorMove;
@@ -131,7 +131,19 @@ public class PlayerMovement : MonoBehaviour {
             playMesh.rotation = Quaternion.RotateTowards(playMesh.rotation, targetRot, 100.0f * Time.deltaTime);
         }
         velocity.x = inVectorMove.toIso().x * speed;
+        if (velocity.x > 12) {
+            velocity.x = 12;
+        }
+        else if (velocity.x < -12) {
+            velocity.x = -12;
+        }
         velocity.z = inVectorMove.toIso().z * speed;
+        if (velocity.z > 12) {
+            velocity.z = 12;
+        }
+        else if (velocity.z < -12) {
+            velocity.z = -12;
+        }
 
         if (isGrounded) {
             if (isJumping) {
