@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Entrance.unity
     guid: 54a60e1d6e0d5f746b689e28926ab210
+  - enabled: 1
+    path: Assets/Scenes/Arena.unity
+    guid: 3ee336e93d1fd194bb73a26dd38415ca
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

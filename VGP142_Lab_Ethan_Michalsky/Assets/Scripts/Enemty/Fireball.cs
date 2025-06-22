@@ -11,15 +11,8 @@ public class Fireball : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnCollisionEnter(Collision collision) {
-        Debug.Log("Wtf");
-        if (collision.gameObject.CompareTag("Enemy")) {
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("Enemy")) {
             //Hi
         }
         else {

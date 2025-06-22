@@ -2,8 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerCollisions : MonoBehaviour{
-    public CloseUpEnemy cue;
-    PlayerMovement playMove;
+    public PlayerMovement playMove;
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.CompareTag("EnemyProg")) {
             SceneManager.LoadScene("Game");
@@ -18,8 +17,11 @@ public class PlayerCollisions : MonoBehaviour{
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.CompareTag("Detection")) {
-            cue.targetInRange = true;
+        if (other.gameObject.CompareTag("SwordCollect")) {
+            playMove.currWeapon = true;
+        }
+        if (other.gameObject.CompareTag("SpearCollect")) {
+            playMove.currWeapon = false;
         }
     }
 

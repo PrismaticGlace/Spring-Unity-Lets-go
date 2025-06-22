@@ -12,6 +12,12 @@ TagManager:
   - Detection
   - Ice
   - Wall
+  - Attack
+  - EnemyAttack
+  - SwordCollect
+  - SpearCollect
+  - Deathplane
+  - GameManager
   layers:
   - Default
   - TransparentFX

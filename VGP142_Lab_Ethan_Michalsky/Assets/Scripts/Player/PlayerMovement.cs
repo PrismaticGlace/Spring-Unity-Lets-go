@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XR;
@@ -10,6 +11,7 @@ public class PlayerMovement : MonoBehaviour {
     public Transform playMesh;
     public PlayerInput pli;
     private PlayerInputActions plina;
+    public GameManager gameMana;
 
     //Controls
 #pragma warning disable IDE0052 // Remove unread private members
@@ -37,10 +39,15 @@ public class PlayerMovement : MonoBehaviour {
     //Smaller Jumps
     [SerializeField, Range(0.0f, 1.0f)] private float jumpBufferTime;
     private float jumpBufferCounter;
-
+    //Health and Such
+    [Space]
+    [SerializeField] private float maxHealth;
+    [SerializeField] private float health;
+    [SerializeField] private float lastTakeDamage;
+    [SerializeField] private float invFrames;
     [Space]
     //Input Dampening
-    [SerializeField, Range(0.0f, 1.0f)] private float inDampRotate;
+    [SerializeField, Range(0.0f, 2.0f)] private float inDampRotate;
     [SerializeField, Range(0.0f, 1.0f)] private float inDampMoveBasic;
     [SerializeField, Range(0.0f, 1.0f)] private float inDampAccel;
     [Range(0.0f, 1.0f)] public float inDampDeccel;
@@ -63,12 +70,25 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] private bool isGrounded;
     [SerializeField] private bool isJumping;
     [SerializeField] private bool isAttacking;
+    public bool currWeapon;
+    public GameObject swordObj;
+    public GameObject spearObj;
+
+    //Getters and Setters for Health and Lives
+    public float getHeath() {
+        return health;
+    }
+
+    public void addHealth() {
+        health += 1;
+    }
 
     private void Awake() {
         plina = new PlayerInputActions();
         getCurrentControls(pli);
+        gameMana = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        
     }
-
     private void OnEnable() {
         plina.Player.Enable();
         plina.Player.Move.started += MoveStarted;
@@ -182,6 +202,17 @@ public class PlayerMovement : MonoBehaviour {
             gravityVect.y = gravity;
         }
 
+        //Attacking
+        if (plina.Player.Attack.WasPressedThisFrame() && !isAttacking) {
+            if (currWeapon) {
+                swordObj.SetActive(true);
+            }
+            else {
+                spearObj.SetActive(true);
+            }
+        }
+        lastTakeDamage -= Time.deltaTime;
+
         velocity.y += (gravityVect.y) * Time.deltaTime;
 
         velocity.y = Mathf.Clamp(velocity.y, -termVelo, termVelo);
@@ -201,5 +232,46 @@ public class PlayerMovement : MonoBehaviour {
 
     private void MoveStarted(InputAction.CallbackContext ctx) {
         currDampMove = inDampAccel;
+    }
+
+    public virtual void TakePlayerDamage(int damageValue) {
+        if (lastTakeDamage < 0) {
+            health -= damageValue;
+            lastTakeDamage = invFrames;
+        }
+        if (health <= 0) {
+            gameMana.TakeLife();
+            gameObject.SetActive(false);
+        }
+    }
+
+    public void PlayerSaveData() {
+        LoadnSave.GameStateData.PlayerData data = GameManager.StateManager.gameState.playerData;
+
+        data.collectWeapon = currWeapon;
+        data.playerHealth = health;
+
+        data.posRotSca.posX = transform.position.x;
+        data.posRotSca.posY = transform.position.y;
+        data.posRotSca.posZ = transform.position.z;
+
+        data.posRotSca.rotX = transform.rotation.x;
+        data.posRotSca.rotY = transform.rotation.y;
+        data.posRotSca.rotZ = transform.rotation.z;
+
+        data.posRotSca.scaleX = transform.localScale.x;
+        data.posRotSca.scaleY = transform.localScale.y;
+        data.posRotSca.scaleZ = transform.localScale.z;
+    }
+
+    public void PlayerLoadData() {
+        LoadnSave.GameStateData.PlayerData data = GameManager.StateManager.gameState.playerData;
+
+        currWeapon = data.collectWeapon;
+        health = data.playerHealth;
+
+        transform.position = new Vector3(data.posRotSca.posX, data.posRotSca.posY, data.posRotSca.posZ);
+        transform.localRotation = Quaternion.Euler(data.posRotSca.rotX, data.posRotSca.rotY, data.posRotSca.rotZ);
+        transform.localScale = new Vector3(data.posRotSca.scaleX, data.posRotSca.scaleY, data.posRotSca.scaleZ);
     }
 }

@@ -13,10 +13,13 @@ GameObject:
   - component: {fileID: 683920723599524288}
   - component: {fileID: 365145906142902329}
   - component: {fileID: 1618495568174590947}
+  - component: {fileID: 8651799062026952306}
+  - component: {fileID: 8949922005952142849}
   - component: {fileID: 5699730179917451919}
+  - component: {fileID: -1478097426148669675}
   m_Layer: 0
   m_Name: Fireball
-  m_TagString: EnemyProg
+  m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,7 +107,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -122,7 +125,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1786216d3e7a8dd4c941d69f56747d8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
+  health: 10
+--- !u!114 &8651799062026952306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8127113484840032465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b64055734bd42c4faf1de5a25349f2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waitFor: 1
+  damage: 3
+--- !u!114 &8949922005952142849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8127113484840032465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a203af435e2c1a44a9a41a0a0a2bcc3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pla: {fileID: 0}
+  attack: {fileID: 8651799062026952306}
 --- !u!54 &5699730179917451919
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -150,3 +181,34 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-1478097426148669675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8127113484840032465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1881403461
+      Data2: 1250636320
+      Data3: -1472235364
+      Data4: -2113633209
+    Path: event:/Sdf/Fireball 1
+  Event: 
+  EventPlayTrigger: 11
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20

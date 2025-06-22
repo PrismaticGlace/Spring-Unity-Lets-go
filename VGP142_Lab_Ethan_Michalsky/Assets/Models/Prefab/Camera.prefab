@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6074502825582512782}
   - component: {fileID: 5199932750710186265}
-  - component: {fileID: 9060764244890771344}
   - component: {fileID: 2599455524501383796}
   - component: {fileID: 7209687788997287190}
+  - component: {fileID: -3996840642103581097}
+  - component: {fileID: 4371260019725277559}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -86,14 +87,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &9060764244890771344
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2225594225275150365}
-  m_Enabled: 1
 --- !u!114 &2599455524501383796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,6 +158,34 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 110
   m_CollisionDetection: 0
+--- !u!114 &-3996840642103581097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2225594225275150365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
+--- !u!114 &4371260019725277559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2225594225275150365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &7346298196541878348
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,10 +231,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49917ff33bca50744a4e57a82cd21bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minXPos: 0
+  minXPos: -150
   maxXPos: 500
-  minZPos: 0
+  minZPos: -150
   maxZPos: 500
-  minYPos: -25
+  minYPos: -30
   maxYPos: 50
   playerRef: {fileID: 0}

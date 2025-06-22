@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Spawner : MonoBehaviour {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -14,5 +15,6 @@ public class Spawner : MonoBehaviour {
         else if (ran == 2) {
             Instantiate(ObjectTwo, transform.position, Quaternion.identity);
         }
+        gameObject.SetActive(false);
     }
 }
